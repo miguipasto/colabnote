@@ -1,16 +1,17 @@
+const couchbase = require('couchbase');
 async function main() {
   try {
     // Conectarse a Couchbase
     const cluster = await couchbase.connect(
-      'couchbase://127.0.0.1',
+      'couchbase://localhost:8091',
       {
-        username: 'miguel',
-        password: 'abc123.',
+        username: 'Administrator',
+        password: 'admin123',
       }
     );
 
     // Obtener el bucket por defecto
-    const bucket = cluster.bucket('colabnotes_bucket');
+    const bucket = cluster.bucket('colabnote_bucket');
 
     // Obtener la colección por defecto del bucket
     const coll = bucket.defaultCollection();
@@ -23,6 +24,7 @@ async function main() {
     console.log('Contenido del documento:', res.content);
   } catch (error) {
     console.error('Error:', error);
+    console.error('Stack Trace:', error.stack);
   }
 }
 

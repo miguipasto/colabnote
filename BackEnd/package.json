@@ -11,9 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@orbitdb/core": "^1.0.2",
     "cors": "^2.8.5",
     "couchbase": "^4.2.8",
     "express": "^4.18.2",
-    "nodemon": "^3.0.2"
+    "ipfs-core": "^0.18.1"
   }
 }
