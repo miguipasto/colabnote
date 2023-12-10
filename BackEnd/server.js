@@ -1,11 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const { connectCouchbase } = require('./src/config/db');
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Connect to Couchbase before starting the server
 (async () => {

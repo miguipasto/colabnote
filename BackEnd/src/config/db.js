@@ -3,10 +3,13 @@ const couchbase = require('couchbase');
 const connectCouchbase = async () => {
   try {
     // Conectarse a Couchbase
-    const cluster = await couchbase.connect('couchbase://127.0.0.1', {
-      username: 'Administrator',
-      password: 'admin123',
-    });
+    const cluster = await couchbase.connect(
+      'couchbase://127.0.0.1',
+      {
+        username: 'Administrator',
+        password: 'admin123',
+      }
+    );
 
     // Obtener el bucket
     const bucket = cluster.bucket('colabnote_bucket');

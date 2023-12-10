@@ -3,7 +3,7 @@ async function main() {
   try {
     // Conectarse a Couchbase
     const cluster = await couchbase.connect(
-      'couchbase://localhost:8091',
+      'couchbase://127.0.0.1',
       {
         username: 'Administrator',
         password: 'admin123',

@@ -61,8 +61,9 @@ exports.getNote = async (req, res) => {
 const { connectCouchbase } = require('../config/db');
 exports.createNote = async (req, res) => {
   try {
+    
     const { title, content } = req.body;
-
+    console.log("Nueva nota" + title +content);
     // Conectar a Couchbase
     const collection = await connectCouchbase();
 
@@ -70,7 +71,7 @@ exports.createNote = async (req, res) => {
     const documentId = `note_${Date.now()}`;
     await collection.upsert(documentId, { title, content });
 
-    res.status(201).json({ message: 'Note created successfully ' + documentId });
+    res.status(201).json({ message: 'Note created successfully', note_id : documentId });
   } catch (error) {
     console.error('Error al crear la nota:', error);
     res.status(500).json({ error: 'Internal Server Error' });
