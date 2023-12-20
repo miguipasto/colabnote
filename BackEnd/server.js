@@ -1,6 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const { connectCouchbase } = require('./src/config/db');
+import express from 'express';
+import cors from 'cors';
+import { connectCouchbase } from './src/config/db_couchbase.js';
+import { connectOrbitDB } from './src/config/db_orbitdb.js';
+// Routes
+import notesRoutes from './src/routes/notes.js';
+
 const app = express();
 const port = 4000;
 
@@ -9,24 +13,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Connect to Couchbase before starting the server
+//Rutas
+app.use('/notes', notesRoutes);
+
+// Connect to Couchbase and OrbitDB before starting the server
 (async () => {
   try {
-    const collection = await connectCouchbase();
+    const couchbaseCollection = await connectCouchbase();
+    app.set('couchbaseCollection', couchbaseCollection);
 
-    // Agregar la conexión a la instancia de Express
-    app.set('couchbaseCollection', collection);
+    const orbitdb = await connectOrbitDB();
+    app.set('orbitdb', orbitdb);
 
-    // Iniciar el servidor después de conectar a Couchbase
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   } catch (error) {
-    console.error('Error de conexión a Couchbase:', error);
-    process.exit(1); // Salir del proceso si hay un error en la conexión
+    console.error('Error de conexión:', error);
+    process.exit(1);
   }
 })();
 
-// Routes
-const notesRoutes = require('./src/routes/notes');
-app.use('/notes', notesRoutes);
+// Middleware para la ruta /api
+app.use('/api', (req, res) => {
+  const packageJson = require('./package.json');
+
+  const apiInfo = {
+    version: packageJson.version,
+    description: 'API para la aplicación ColabNote',
+    author: 'Miguel Pastoriza Santaclara',
+    status: 'running',
+  };
+
+  res.json(apiInfo);
+});

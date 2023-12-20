@@ -1,4 +1,4 @@
-const couchbase = require('couchbase');
+import couchbase from 'couchbase';
 
 const connectCouchbase = async () => {
   try {
@@ -25,4 +25,4 @@ const connectCouchbase = async () => {
 };
 
 
-module.exports = { connectCouchbase };
+export { connectCouchbase };
