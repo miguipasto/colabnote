@@ -1,0 +1,3 @@
+ipfs swarm connect /ip4/91.116.194.130/tcp/4001/ipfs/12D3KooWFZR5jZmjrheyi8B4kGdsNKDTuB9ijUS4HVbJdhAk6T6K
+#
+ipfs swarm connect /ip4/83.37.111.89/tcp/4001/ipfs/12D3KooWAzuka5GzGuyBFjHzfWLabgF24mVF8NeFBcJEP1brvAzq
