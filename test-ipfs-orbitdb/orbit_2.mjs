@@ -18,7 +18,6 @@ const main = async () => {
 
   //Configuramos la instancia
   const optionsToWrite = {
-    // Give write access to the creator of the database
     accessController: {
       type: 'orbitdb', 
       write: ['*'],

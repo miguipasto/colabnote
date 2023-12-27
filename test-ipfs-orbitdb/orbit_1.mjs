@@ -18,7 +18,6 @@ const main = async () => {
 
   //Configuramos la instancia
   const optionsToWrite = {
-    // Give write access to the creator of the database
     accessController: {
       type: 'orbitdb', //OrbitDBAccessController
       write: ['*'],
@@ -26,7 +25,7 @@ const main = async () => {
   }
   
   // Creamos la bsae de datos
-  const db = await orbitdb.docs('colabnote', optionsToWrite); // Cambia 'docs' al tipo de base de datos que necesites
+  const db = await orbitdb.docs('colabnote', optionsToWrite);
   await db.load();
   console.log(`Base de datos creada: ${db.address.toString()}`);
 
