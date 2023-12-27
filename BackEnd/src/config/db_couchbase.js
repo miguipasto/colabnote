@@ -1,6 +1,6 @@
 import couchbase from 'couchbase';
 
-const connectCouchbase = async () => {
+const couchBaseCollection = async () => {
   try {
     // Conectarse a Couchbase
     const cluster = await couchbase.connect(
@@ -24,5 +24,4 @@ const connectCouchbase = async () => {
   }
 };
 
-
-export { connectCouchbase };
+export { couchBaseCollection };

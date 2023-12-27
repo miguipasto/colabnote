@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "type" : "module",
+  "type": "module",
   "dependencies": {
     "@orbitdb/core": "^1.0.2",
     "abbrev": "^1.1.1",

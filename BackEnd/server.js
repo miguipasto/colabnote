@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { connectCouchbase } from './src/config/db_couchbase.js';
-import { connectOrbitDB } from './src/config/db_orbitdb.js';
+import { couchBaseCollection } from './src/config/db_couchbase.js';
+import { orbitDBInstance } from './src/config/db_orbitdb.mjs';
 // Routes
 import notesRoutes from './src/routes/notes.js';
 
@@ -19,11 +19,13 @@ app.use('/notes', notesRoutes);
 // Connect to Couchbase and OrbitDB before starting the server
 (async () => {
   try {
-    const couchbaseCollection = await connectCouchbase();
+    const couchbaseCollection = await couchBaseCollection();
     app.set('couchbaseCollection', couchbaseCollection);
+    console.log('Connection with Couchbase success');
 
-    const orbitdb = await connectOrbitDB();
-    app.set('orbitdb', orbitdb);
+    // const orbitdb = await orbitDBInstance();
+    // app.set('orbitdb', orbitdb);
+    // console.log('Connection with OrbitDB success');
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
@@ -32,14 +34,12 @@ app.use('/notes', notesRoutes);
     console.error('Error de conexión:', error);
     process.exit(1);
   }
-})();
+})(); 
 
 // Middleware para la ruta /api
 app.use('/api', (req, res) => {
-  const packageJson = require('./package.json');
 
   const apiInfo = {
-    version: packageJson.version,
     description: 'API para la aplicación ColabNote',
     author: 'Miguel Pastoriza Santaclara',
     status: 'running',

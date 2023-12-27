@@ -4,10 +4,10 @@ import * as notesController from '../controllers/notesController.js';
 const router = express.Router();
 
 router.post('/createNote', notesController.createNote);
-router.get('/get/:id', notesController.getNote);
+router.get('/getNote/:id', notesController.getNote);
 
-router.post('/shareNote/:noteId', notesController.shareNote);
-router.get('/getSharedNote/:orbitDBHash', notesController.getSharedNote);
+router.post('/shareNote/:id', notesController.shareNote);
+router.get('/getSharedNote/orbitdb/:dbAddress/:noteId', notesController.getSharedNote);
 
 
 
