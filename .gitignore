@@ -1,4 +1,4 @@
 BackEnd/node_modules/*
 BackEnd/orbitdb/*
-BackEnd/test/node_modules/*
-BackEnd/test/orbitdb/*
+test-ipfs-orbitdb/node_modules/*
+test-ipfs-orbitdb/orbitdb/*
