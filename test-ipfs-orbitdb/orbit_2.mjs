@@ -25,10 +25,12 @@ const main = async () => {
   }
   
   // Creamos la bsae de datos
-  const db = await orbitdb.open('/orbitdb/zdpuAkeq5NRMJuLW7S1Src77CgonhcVku2WYodgS17Nw2G9XH/colabnote');
+  const db = await orbitdb.open('/orbitdb/zdpuAzV3L5NSovdmhkXqKqZc8o3mAZMYZMof14J6Y8tG7bxxR/note_1703708080037"');
   await db.load();
   console.log(`Conectado a la base de datos: ${db.address.toString()}`);
 
+  const datos = db.get('zdpuApounySe7VnVyRsiaknarM6KH4RjUSwjbVN4hB5wC1qaW');
+  console.log(datos)
 
   db.events.on('replicate', () => {
     console.log('Replicando cambios...');
@@ -45,11 +47,11 @@ const main = async () => {
     console.log(entry.payload.value);
   });
   
-  // Añade un nuevo documento a la base de datos
-  const newData = { _id: 'valor', otraClave: 'valor desde 2' };
-  const hash = await db.put(newData);
+  // // Añade un nuevo documento a la base de datos
+  // const newData = { _id: 'valor', otraClave: 'valor desde 2' };
+  // const hash = await db.put(newData);
 
-  console.log(`Nuevo dato publicado en la base de datos: ${hash}`);
+  // console.log(`Nuevo dato publicado en la base de datos: ${hash}`);
 
 };
 
