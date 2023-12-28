@@ -1,17 +1,13 @@
 // notesController.js
-import { orbitDBInstance } from '../config/db_orbitdb.mjs';
 // Procedimientos Bases de datos
 import * as CouchBaseProcedures from './couchBase_controller.js'
 import * as OrbitDBProcedures from './orbitDB_controller.js'
 
 export const createNote = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    let { title, content, note_id } = req.body;
 
-    let note_id = ""
-    try{
-      note_id= req.body.note_id;
-    } catch (error){
+    if(!note_id){
       note_id = `note_${Date.now()}`;
     }
     
@@ -60,11 +56,14 @@ export const shareNote = async (req, res) => {
   try {
     const note_id = req.params.id;
 
+    // Obtenemos la nota de Couchbase
+    const note = await CouchBaseProcedures.getNote(note_id)
+
     // Compartimos la nota en IPFS
-    const db_address = await OrbitDBProcedures.shareNote(note_id);
+    const db_address = await OrbitDBProcedures.shareNote(note);
 
     // Guardamos la base de datos en Couchbase
-    await CouchBaseProcedures.updateNote(note_id.id, note_id.title, note_id.content, db_address)
+    await CouchBaseProcedures.updateNote(note.id, note.title, note.content, db_address)
 
     console.log(`Nuevo dato publicado en la base de datos: ${db_address}`);
 

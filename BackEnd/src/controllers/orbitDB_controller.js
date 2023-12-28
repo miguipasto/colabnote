@@ -11,6 +11,8 @@ export const shareNote = async (note) => {
   
     // Creamos la base de datos
     const orbitdb = await orbitDBInstance();
+    console.log("Conectado a IPFS")
+
     const db = await orbitdb.docs(note.id , optionsToWrite); 
     await db.load();
 
@@ -20,7 +22,7 @@ export const shareNote = async (note) => {
 
     // Esperamos la conexión de otro nodo
     db.events.on('replicate', () => {
-    console.log('Esperando conexiones');
+      console.log('Esperando conexiones');
     });
     
     // Replicamos el contenido
@@ -29,17 +31,18 @@ export const shareNote = async (note) => {
 
         // Verificamos quien se ha conectado
         const datos = db.get('');
-        console.log(datos[0])
+        console.log(datos)
 
         // Añadimos el documento a la base de datos
         const newNote = { _id: note.id, title: note.title, content: note.content};
         db.put(newNote);
 
+        db.close()
+
     });
-
-    db.close();
-
+    
     return db_address;
+
 }
 
 export const getsharedNote = async (db_address) => {
