@@ -50,35 +50,35 @@ export const getsharedNote = async (db_address) => {
   // Creamos la instancia de orbitdb
   const orbitdb = await orbitDBInstance();
 
-  const db = await orbitdb.open(db_address);
-  await db.load();
-  console.log(`Conectado a la base de datos: ${db.address.toString()}`);
+    const db = await orbitdb.open(db_address);
+    await db.load();
+    console.log(`Conectado a la base de datos: ${db.address.toString()}`);
 
-  let datos = await db.get('');
+    let datos = await db.get('');
 
-  // Indicamos que estamos conectados
-  if(datos.length == 0){
-    const newNote = { _id: 'a', title: "Connected", content: "From Node 2" };
-    await db.put(newNote);
+    // Indicamos que estamos conectados
+    if(datos.length == 0){
+      const newNote = { _id: 'a', title: "Connected", content: "From Node 2" };
+      await db.put(newNote);
 
-     // Esperamos los datos
-    db.events.on('replicate', () => {
-      console.log('Replicando cambios...');
-    });
-    
-    // Creamos una promesa para esperar hasta que los cambios se repliquen
-    await new Promise((resolve) => {
-      db.events.on('replicated', () => {
-        console.log('Cambios replicados con éxito.');
-        datos = db.get('');
-        console.log(datos);
-        
-        resolve(); 
+       // Esperamos los datos
+      db.events.on('replicate', () => {
+        console.log('Replicando cambios...');
       });
-    });
-  }
+      
+      // Creamos una promesa para esperar hasta que los cambios se repliquen
+      await new Promise((resolve) => {
+        db.events.on('replicated', () => {
+          console.log('Cambios replicados con éxito.');
+          datos = db.get('');
+          console.log(datos);
+          
+          resolve(); 
+        });
+      });
+    }
 
-  db.close();
+    db.close();
 
-  return datos;
+    return datos;
 }

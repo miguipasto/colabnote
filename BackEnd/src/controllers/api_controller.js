@@ -81,12 +81,12 @@ export const getSharedNote = async (req, res) => {
 
     // Recuperamos la nota de orbitDB
     const db_address = orbit_address + "/" + note_id;
-    const note_shared = await OrbitDBProcedures.getSharedNote(db_address);
+    const note_shared = await OrbitDBProcedures.getsharedNote(db_address);
 
     // La guardamos en nuestra base de datos local couchbase
     await CouchBaseProcedures.creteNote(note_id, note_shared.title, note_shared.content, db_address);
 
-    console.log("Nueva nota recuperada con éxito:\n" + note_shared);
+    console.log("Nueva nota recuperada con éxito: " + note_id);
     res.json({ note: note_shared });    
   } catch (error) {
     console.error('Error al compartir la nota en OrbitDB:', error);
