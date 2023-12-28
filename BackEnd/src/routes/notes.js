@@ -1,14 +1,13 @@
 import express from 'express';
-import * as notesController from '../controllers/notesController.js';
+import * as apiController from '../controllers/api_controller.js'
 
 const router = express.Router();
 
-router.post('/createNote', notesController.createNote);
-router.get('/getNote/:id', notesController.getNote);
+router.post('/createNote', apiController.createNote);
+router.get('/getNote/:id', apiController.getNote);
+router.post('/updateNote/:id',apiController.updateNote)
 
-router.post('/shareNote/:id', notesController.shareNote);
-router.get('/getSharedNote/orbitdb/:dbAddress/:noteId', notesController.getSharedNote);
-
-
+router.post('/shareNote/:id', apiController.shareNote);
+router.get('/getSharedNote/orbitdb/:orbit_address/:id', apiController.getSharedNote);
 
 export default router;
