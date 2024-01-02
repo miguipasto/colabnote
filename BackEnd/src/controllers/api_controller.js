@@ -41,7 +41,12 @@ export const updateNote = async (req, res) => {
     const note_id = req.params.id;
     const { title, content, shared } = req.body;
     
-    await CouchBaseProcedures.updateNote(note_id, title, content, shared); 
+    await CouchBaseProcedures.updateNote(note_id, title, content, shared);
+    const note_updated = await CouchBaseProcedures.getNote(note_id);
+    
+    if(shared!= ""){
+      await OrbitDBProcedures.updateSharedNote(note_updated,shared);
+    }
 
     console.log(`Nota actualizada correctamente`);
     res.status(201).json({ message: 'Note updated successfully', note_id: note_id });
@@ -60,14 +65,14 @@ export const shareNote = async (req, res) => {
     const note = await CouchBaseProcedures.getNote(note_id)
 
     // Compartimos la nota en IPFS
-    const db_address = await OrbitDBProcedures.shareNote(note);
+    const share_note = await OrbitDBProcedures.shareNote(note);
 
     // Guardamos la base de datos en Couchbase
-    await CouchBaseProcedures.updateNote(note.id, note.title, note.content, db_address)
+    await CouchBaseProcedures.updateNote(note.id, note.title, note.content, share_note.db_address)
 
-    console.log(`Nuevo dato publicado en la base de datos: ${db_address}`);
+    console.log(`Nuevo dato publicado en la base de datos: ${share_note.db_address}`);
 
-    res.json({ orbitDB_database: db_address });
+    res.json({ share_note: share_note });
   } catch (error) {
     console.error('Error al compartir la nota en OrbitDB:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -84,12 +89,12 @@ export const getSharedNote = async (req, res) => {
     const note_shared = await OrbitDBProcedures.getsharedNote(db_address);
 
     // La guardamos en nuestra base de datos local couchbase
-    await CouchBaseProcedures.creteNote(note_id, note_shared.title, note_shared.content, db_address);
+    await CouchBaseProcedures.creteNote(note_id, note_shared[0].title, note_shared[0].content, orbit_address);
 
     console.log("Nueva nota recuperada con éxito: " + note_id);
-    res.json({ note: note_shared });    
+    res.json({ note: note_shared[0] });    
   } catch (error) {
-    console.error('Error al compartir la nota en OrbitDB:', error);
+    console.error('Error al recuperar la nota en OrbitDB:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
