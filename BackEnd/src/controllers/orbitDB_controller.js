@@ -31,7 +31,8 @@ export const shareNote = async (note) => {
 
     db.events.on('replicated', () => {
       datos = db.get('');
-      console.log('[OrbitDb] :  Nuevos cambios replicados con éxito\n' + datos);
+      console.log('[OrbitDb] :  Nuevos cambios replicados con éxito');
+      console.log(datos[0]);
       updateSharedNote(null,db_address);
     });
 
@@ -66,10 +67,14 @@ export const getsharedNote = async (db_address) => {
       await new Promise((resolve) => {
         db.events.on('replicated', () => {
           datos = db.get('');
-          console.log('[OrbitDb] :  Nuevos cambios replicados con éxito\n' + datos);
+          console.log('[OrbitDb] :  Nuevos cambios replicados con éxito');
+          console.log(datos[0]);
           resolve(); 
         });
       });
+    } else {
+      console.log('[OrbitDb] :  Nuevos cambios replicados con éxito');
+      console.log(datos[0]);
     }
 
     return datos[0];

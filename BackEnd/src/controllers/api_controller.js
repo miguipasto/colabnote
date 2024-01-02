@@ -73,7 +73,7 @@ export const getSharedNote = async (req, res) => {
     const db_address = orbit_address + "/" + note_id;
     const note_shared = await OrbitDBProcedures.getsharedNote(db_address);
 
-    await CouchBaseProcedures.creteNote(note_id, note_shared[0].title, note_shared[0].content, orbit_address);
+    await CouchBaseProcedures.creteNote(note_id, note_shared.title, note_shared.content, orbit_address);
 
     res.status(201).json({ message: 'Note compartida recuperada con éxito', data: { note_shared} }); 
   } catch (error) {
