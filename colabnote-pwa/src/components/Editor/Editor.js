@@ -1,58 +1,84 @@
 // Editor.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Markdown from 'marked-react';
 import apiService from '../../services/api';
 import './Editor.css';
 
-const Editor = ({ selectedFile }) => {
-  const [editing, setEditing] = useState(false);
+const Editor = ({ selectedNote }) => {
+  const [note, setNote] = useState(null);
   const [editedContent, setEditedContent] = useState('');
+  const [editing, setEditing] = useState(false);
 
-  const toggleEditing = () => {
-    setEditing(!editing);
-  };
+  useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        if (selectedNote) {
+          const response = await apiService.getNote(selectedNote._id);
+          if (response && response.data) {
+            setNote(response.data.note);
+            setEditedContent(response.data.note.content);
+          }
+        }
+      } catch (error) {
+        console.error('Error al obtener el contenido de la nota:', error.message);
+      }
+    };
+
+    fetchNote();
+  }, [selectedNote]);
 
   const handleEditChange = (event) => {
     setEditedContent(event.target.value);
   };
 
-  const renderContent = () => {
-    return (
-      <Markdown>
-        {editing ? editedContent : selectedFile?.content || ''}
-      </Markdown>
-    );
+  const toggleEditing = () => {
+    setEditing(!editing);
   };
 
   const saveContent = async () => {
     try {
-      // Llama a la función de guardar en el servicio API
-      const respuesta = await apiService.crearNota('titulo','# hola');
-      console.log(respuesta)
+      await apiService.updateNote(note._id, note.title, editedContent, note.shared);
+      const updatedNoteResponse = await apiService.getNote(note._id); // Refetch the updated note
+      if (updatedNoteResponse && updatedNoteResponse.data) {
+        setNote(updatedNoteResponse.data.note);
+        setEditedContent(updatedNoteResponse.data.note.content);
+      }
+      setEditing(false);
     } catch (error) {
       console.error('Error al guardar el contenido:', error.message);
     }
   };
 
   return (
-    <div className="editor">
-      <h2>{selectedFile || 'Selecciona un archivo'}</h2>
-      {renderContent()}
-      {editing && (
-        <div>
-          <textarea
-            placeholder="Escribe tu código aquí"
-            value={editedContent}
-            onChange={handleEditChange}
-          ></textarea>
+    <div className={`editor ${editing ? 'editing' : ''}`}>
+      {note ? (
+        <>
+          <h2>{note.title}</h2>
+          {editing ? (
+            <textarea
+              value={editedContent}
+              onChange={handleEditChange}
+              placeholder="Edita tu nota aquí"
+              rows={10}
+              cols={50}
+            />
+          ) : (
+            <Markdown>{note.content}</Markdown>
+          )}
           <div className="editor-buttons">
-            <button onClick={saveContent}>Guardar</button>
+            {editing && (
+              <button className="save-button" onClick={saveContent}>
+                Guardar
+              </button>
+            )}
+            <button className="edit-button" onClick={toggleEditing}>
+              {editing ? 'Cancelar' : 'Editar'}
+            </button>
           </div>
-        </div>
+        </>
+      ) : (
+        <p>Selecciona una nota</p>
       )}
-      <div className="editor-buttons">
-        <button onClick={toggleEditing}>{editing ? 'Cancelar' : 'Editar'}</button>
-      </div>
     </div>
   );
 };

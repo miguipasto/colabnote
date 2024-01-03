@@ -1,33 +1,10 @@
 // apiService.js
-const API_BASE_URL = 'http://127.0.0.1:4000';
+const API_BASE_URL = 'http://localhost:4000';
 
 const apiService = {
-  async crearNota({ title2, content2 }) {
-    const title = "titulo";
-    const content = "# hola";
+  async getNotesSaved() {
     try {
-      const response = await fetch(`${API_BASE_URL}/notes/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content }),
-      });
-
-      if (response.ok) {
-        return await response.json();
-      } else {
-        throw new Error(`Error al crear la nota: ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Error de red:', error);
-      throw new Error('Error de red al crear la nota');
-    }
-  },
-
-  async obtenerNota(id) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/notes/get/${id}`);
+      const response = await fetch(`${API_BASE_URL}/notes/getNotesSaved`);
 
       if (response.ok) {
         return await response.json();
@@ -40,6 +17,41 @@ const apiService = {
     }
   },
 
+  async getNote(id) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/notes/getNote/${id}`);
+
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error(`Error al obtener la nota: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      throw new Error('Error de red al obtener la nota');
+    }
+  },
+
+  async updateNote(note_id, title, content, shared) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/notes/updateNote/${note_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ note_id, title, content, shared }),
+      });
+
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error(`Error al actualizar la nota: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      throw new Error('Error de red al actualizar la nota');
+    }
+  },
 };
 
 export default apiService;

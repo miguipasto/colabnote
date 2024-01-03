@@ -1,21 +1,45 @@
 /* Editor.css */
-
 .editor {
-    padding: 20px;
-    box-sizing: border-box;
-    margin-left: 30%; 
-  }
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: 30%;
+  transition: margin-left 0.5s; /* Smooth transition for margin-left */
+}
 
-  .editor h2 {
-    margin-bottom: 10px;
-  }
-  
-  textarea {
-    width: 100%;
-    height: 50%;
-    border: none;
-    padding: 10px;
-    box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
+.editor.editing {
+  margin-left: 10%; /* Adjusted margin for editing mode */
+}
+
+.editor h2 {
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 50vh; /* Adjusted height */
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.editor-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}

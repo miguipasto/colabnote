@@ -1,16 +1,14 @@
 import React from 'react';
 import './Sidebar.css';
 
-const Sidebar = ({ onFileSelect }) => {
-  const files = ['index.html', 'styles.css', 'script.js'];
-
+const Sidebar = ({ notes, onNoteSelect }) => {
   return (
     <div className="sidebar">
       <h2>Explorer</h2>
       <ul>
-        {files.map((file, index) => (
-          <li key={index} onClick={() => onFileSelect(file)}>
-            {file}
+        {notes.map((note, index) => (
+          <li key={index} onClick={() => onNoteSelect(note)}>
+            {note.title}
           </li>
         ))}
       </ul>

@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import Editor from './components/Editor/Editor';
+import apiService from './services/api';
 
 function App() {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [notes, setNotes] = useState([]);
 
-  const handleFileSelect = (file) => {
-    setSelectedFile(file);
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await apiService.getNotesSaved();
+
+        if (response && response.data) {
+          setNotes(response.data.notesData);
+        }
+      } catch (error) {
+        console.error('Error al obtener las notas:', error.message);
+      }
+    };
+
+    fetchNotes();
+  }, []);
+
+  const handleNoteSelect = (note) => {
+    setSelectedNote(note);
   };
 
   return (
     <div className="app-container">
-      <Sidebar onFileSelect={handleFileSelect} />
-      <Editor selectedFile={selectedFile} />
+      <Sidebar notes={notes} onNoteSelect={handleNoteSelect} />
+      <Editor selectedNote={selectedNote} />
     </div>
   );
 }

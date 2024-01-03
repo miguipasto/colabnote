@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { couchBaseCollection } from './src/config/db_couchbase.js';
-import { orbitDBInstance } from './src/config/db_orbitdb.mjs';
+import { couchBaseConnection } from './src/config/db_couchbase.js';
 // Routes
 import notesRoutes from './src/routes/notes.js';
 
@@ -13,19 +12,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-//Rutas
+// Rutas
 app.use('/notes', notesRoutes);
 
-// Connect to Couchbase and OrbitDB before starting the server
+// Iniciamos la conexión con la base de datos couchbase
 (async () => {
   try {
-    const couchbaseCollection = await couchBaseCollection();
-    app.set('couchbaseCollection', couchbaseCollection);
+    const couchBaseCluster = await couchBaseConnection();
     console.log('Connection with Couchbase success');
-
-    // const orbitdb = await orbitDBInstance();
-    // app.set('orbitdb', orbitdb);
-    // console.log('Connection with OrbitDB success');
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
