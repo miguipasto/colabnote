@@ -1,0 +1,13 @@
+<!-- sidebar.component.html -->
+
+<div class="sidebar">
+  <div class="header">
+    <h2>Notas Guardadas</h2>
+  <button class="new-note-button" (click)="createNote()">Nueva Nota</button>
+  </div>
+  <ul>
+    <li *ngFor="let note of notesSaved" (click)="selectNote(note._id)">
+      {{ note.title }}
+    </li>
+  </ul>
+</div>

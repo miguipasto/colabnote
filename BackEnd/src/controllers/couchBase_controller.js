@@ -79,3 +79,20 @@ export const updateNote = async (note_to_update) => {
     throw error;
   }
 }
+
+// Función para eliminar una nota en Couchbase
+export const deleteNote = async (note_id) => {
+  try {
+    // Obteniendo la colección Couchbase
+    const collection = await CouchBaseConfig.couchBaseCollection();
+
+    // Eliminando la nota por su ID
+    await collection.remove(note_id);
+
+    console.log(`[CouchBase] : Nota eliminada correctamente: ${note_id}`);
+    return true;
+  } catch (error) {
+    console.log(`[CouchBase] : Error al eliminar la nota ${note_id} en Couchbase:`, error);
+    throw error;
+  }
+}

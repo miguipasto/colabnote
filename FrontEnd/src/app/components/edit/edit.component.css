@@ -1,0 +1,90 @@
+.container {
+    display: grid;
+    grid-template-rows: 1fr 9fr;
+  }
+  
+  .nav-bar {
+    display: grid;
+    grid-row: 1;
+    background-color: #004696;
+    grid-template-columns: 5fr 1fr;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .title-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    background-color: #ffffff;
+    color: #004696;
+    border: 1px solid #004696;
+    padding: 8px 12px; /* Ajusta el tamaño de los botones */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #004696;
+    color: #ffffff;
+  }
+  
+  .title-bar h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.5rem;
+  }
+  
+  .title-bar button {
+    margin-left: 1%;
+  }
+
+  
+  .title-bar button:hover {
+  }
+  
+  .actions,
+  .note-buttons {
+    display: flex;
+    justify-content: end; /* Distribuye los botones a lo largo del espacio disponible */
+    align-items: center;
+  }
+  
+  .actions button,
+  .note-buttons button{
+    margin-left: 1%;
+  }
+  
+  .actions button:hover {
+  }
+  
+  .nav-bar input {
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+  }
+  
+  .editor {
+    display: grid;
+    grid-row: 2;
+    padding: 10px;
+  }
+  
+  .editor textarea {
+    width: 100%;
+    height: 700px; /* Ajusta el tamaño de la caja de textarea */
+    border: 1px solid #004696;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 1rem; /* Ajusta el tamaño del texto en el área de texto */
+  }
+  
+  .editor textarea:focus {
+    outline: none;
+    border-color: #004696;
+  }
+  
+  

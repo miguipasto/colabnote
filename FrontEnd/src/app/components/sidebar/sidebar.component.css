@@ -1,0 +1,51 @@
+/* sidebar.component.css */
+
+.sidebar {
+    background-color: rgb(112, 103, 128);
+    color: #ffffff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 5%;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .new-note-button {
+    background-color: #ffffff;
+    color: #004696;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .new-note-button:hover {
+    background-color: #004696;
+    color: #ffffff;
+  }
+  

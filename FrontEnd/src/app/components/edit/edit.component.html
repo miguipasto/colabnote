@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="nav-bar">
+      <ng-container *ngIf="!editing; else editMode">
+        <div class="title-bar">
+          <h2>{{ note.title }}</h2>
+          <button *ngIf="note.content" (click)="toggleEditing()">Editar</button>
+          <button *ngIf="note.content" (click)="deleteNote()">Elimiar</button>
+        </div>
+        <div class="actions">
+          <button *ngIf="note.content">Compartir</button>
+          <button>Info</button>
+        </div>
+      </ng-container>
+      <ng-template #editMode>
+        <input [(ngModel)]="note.title" placeholder="Título">
+      </ng-template>
+    </div>
+    <div class="editor">
+      <ng-container *ngIf="!editing; else editModeContent">
+        <div markdown *ngIf="note.content">{{ note.content }}</div>
+        <button *ngIf="!note.content" disabled>No hay contenido para mostrar</button>
+      </ng-container>
+      <ng-template #editModeContent>
+        <textarea [(ngModel)]="note.content"></textarea>
+        <div class="note-buttons">
+            <button (click)="saveChanges()">Guardar Cambios</button>
+        <button (click)="cancelEditing()">Cancelar</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  

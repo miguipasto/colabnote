@@ -67,7 +67,7 @@ export const updateNote = async (req, res) => {
     const note_to_update = { _id: note_id, title: title, content: content, shared: shared }
     
     // Verificando si se comparte la nota en OrbitDB
-    if (note_to_update.shared !== "") {
+    if (note_to_update.shared != false) {
       await OrbitDBProcedures.updateSharedNote(note_to_update, shared);
     } else {
       // Actualizando la nota en Couchbase
@@ -120,6 +120,23 @@ export const getSharedNote = async (req, res) => {
     res.status(201).json({ message: 'Note compartida recuperada con éxito', data: { note_shared } }); 
   } catch (error) {
     console.error('Error al recuperar la nota en OrbitDB:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// Ruta para eliminar una nota
+export const deleteNote = async (req, res) => {
+  try {
+    // Obteniendo el ID de la nota desde los parámetros de la solicitud
+    const note_id = req.params.id;
+
+    // Eliminando la nota en Couchbase
+    await CouchBaseProcedures.deleteNote(note_id);
+
+    // Respondiendo con un mensaje de éxito y el ID de la nota eliminada
+    res.status(200).json({ message: 'Nota eliminada correctamente', data: { note_id } });
+  } catch (error) {
+    console.error('Error al eliminar la nota:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
