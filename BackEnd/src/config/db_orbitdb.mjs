@@ -1,5 +1,6 @@
 import * as IPFS from 'ipfs-http-client';
 import OrbitDB from 'orbit-db'
+import { exec } from 'child_process';
 
 // Función para obtener una instancia de OrbitDB conectada a IPFS
 const orbitDBInstance = async () => {
@@ -26,4 +27,34 @@ const orbitDBInstance = async () => {
   }
 };
 
-export { orbitDBInstance };
+
+const setUpIPFSDaemon = async () => {
+  try {
+    const command = 'ipfs daemon';
+
+    const ipfsDaemonProcess = exec(command);
+
+    ipfsDaemonProcess.stdout.on('data', (data) => {
+      console.log(data);
+    });
+
+    ipfsDaemonProcess.stderr.on('data', (data) => {
+      console.error(data);
+    });
+
+    ipfsDaemonProcess.on('exit', (code, signal) => {
+      console.log(`IPFS daemon ha salido con código ${code} y señal ${signal}`);
+    });
+
+    // Esperar un momento para asegurar que el daemon se haya iniciado
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    return ipfsDaemonProcess;
+  } catch (error) {
+    console.error('Error al iniciar IPFS daemon:', error);
+    throw error;
+  }
+};
+
+
+export { orbitDBInstance, setUpIPFSDaemon };

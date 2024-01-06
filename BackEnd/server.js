@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { couchBaseConnection } from './src/config/db_couchbase.js';
+import { setUpIPFSDaemon } from './src/config/db_orbitdb.mjs'
+
 // Routes
 import notesRoutes from './src/routes/notes.js';
 
@@ -21,9 +23,20 @@ app.use('/notes', notesRoutes);
     const couchBaseCluster = await couchBaseConnection();
     console.log('Connection with Couchbase success');
 
+    const ipfsDaemon = await setUpIPFSDaemon();
+    console.log('IPFS daemon iniciado');
+
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
+
+    // Manejar la terminación del servidor para cerrar el daemon de IPFS
+    process.on('SIGINT', () => {
+      console.log('Cerrando el daemon de IPFS...');
+      ipfsDaemon.kill();
+      process.exit(0);
+    });
+
   } catch (error) {
     console.error('Error de conexión:', error);
     process.exit(1);
