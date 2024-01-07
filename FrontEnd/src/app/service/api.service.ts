@@ -50,4 +50,9 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}${this.notesEndPoint}${endpoint}/${id}`);
   }
 
+  shareNote(id: string){
+    const endpoint = `/shareNote`;
+    return this.http.post(`${this.apiUrl}${this.notesEndPoint}${endpoint}/${id}`, null);
+  }
+
 }

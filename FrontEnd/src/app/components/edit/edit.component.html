@@ -7,7 +7,7 @@
           <button *ngIf="note.content" (click)="deleteNote()">Elimiar</button>
         </div>
         <div class="actions">
-          <button *ngIf="note.content">Compartir</button>
+          <button *ngIf="note.content" (click)="shareNote()">Compartir</button>
           <button>Info</button>
         </div>
       </ng-container>
@@ -24,7 +24,7 @@
         <textarea [(ngModel)]="note.content"></textarea>
         <div class="note-buttons">
             <button (click)="saveChanges()">Guardar Cambios</button>
-        <button (click)="cancelEditing()">Cancelar</button>
+            <button (click)="cancelEditing()">Cancelar</button>
         </div>
       </ng-template>
     </div>

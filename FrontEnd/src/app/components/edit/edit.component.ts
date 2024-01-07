@@ -73,5 +73,17 @@ export class EditComponent implements OnInit {
       });
     }
   }
+
+  shareNote(){
+    this.apiService.shareNote(this.note._id).subscribe({
+      next: (response: any) => {
+        console.log(response)
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
+
+  }
   
 }
