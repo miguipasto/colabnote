@@ -47,7 +47,7 @@ const setUpIPFSDaemon = async () => {
     });
 
     // Esperar un momento para asegurar que el daemon se haya iniciado
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     return ipfsDaemonProcess;
   } catch (error) {

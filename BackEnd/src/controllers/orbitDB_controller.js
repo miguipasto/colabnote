@@ -54,7 +54,7 @@ export const shareNote = async (note) => {
   } catch (error) {
     console.log('[OrbitDb] : Error al compartir la nota en OrbitDB:', error);
     throw error; 
-  }
+  } 
 }
 
 // Función para obtener una nota compartida desde OrbitDB
@@ -108,6 +108,11 @@ export const getSharedNote = async (db_address) => {
   } catch (error) {
     console.log('Error al recuperar la nota en OrbitDB:', error);
     throw error;
+  } finally{
+    // Asegurar que la instancia de OrbitDB se cierre adecuadamente
+    if (orbitdb) {
+      await orbitdb.stop();
+    }
   }
 }
 
@@ -151,5 +156,10 @@ export const updateSharedNote = async (note, db_address) => {
   } catch (error) {
     console.log('Error al actualizar la nota en OrbitDB:', error);
     throw error;
+  } finally{
+    // Asegurar que la instancia de OrbitDB se cierre adecuadamente
+    if (orbitdb) {
+      await orbitdb.stop();
+    }
   }
 }
