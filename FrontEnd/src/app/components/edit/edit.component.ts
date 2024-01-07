@@ -85,5 +85,21 @@ export class EditComponent implements OnInit {
     });
 
   }
+
+  getSharedNote(){
+    const userInput = window.prompt('Introduce la dirección IPFS de la nota:');
+    if (userInput !== null) {
+      this.apiService.getSharedNote(userInput).subscribe({
+        next: (response: any) => {
+          console.log(response)
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+      });
+    }
+
+    
+  }
   
 }

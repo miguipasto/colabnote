@@ -55,4 +55,9 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}${this.notesEndPoint}${endpoint}/${id}`, null);
   }
 
+  getSharedNote(orbitd_address: string){
+    const endpoint = `/getSharedNote`;
+    return this.http.get(`${this.apiUrl}${this.notesEndPoint}${endpoint}${orbitd_address}`);
+  }
+
 }
