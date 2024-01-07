@@ -30,7 +30,7 @@ const orbitDBInstance = async () => {
 
 const setUpIPFSDaemon = async () => {
   try {
-    const command = 'ipfs daemon';
+    const command = 'ipfs daemon --enable-pubsub-experiment';
 
     const ipfsDaemonProcess = exec(command);
 
