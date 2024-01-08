@@ -10,7 +10,6 @@
         </div>
         <div class="actions">
           <button *ngIf="note.content" (click)="shareNote()">Compartir</button>
-          <button>Info</button>
         </div>
       </ng-container>
       <ng-template #editMode>
@@ -20,7 +19,7 @@
     <div class="editor">
       <ng-container *ngIf="!editing; else editModeContent">
         <div markdown *ngIf="note.content">{{ note.content }}</div>
-        <button *ngIf="!note.content" disabled>No hay contenido para mostrar</button>
+        <button *ngIf="!note.content" disabled><h1>¡Bienvenido a ColabNote!</h1></button>
       </ng-container>
       <ng-template #editModeContent>
         <textarea [(ngModel)]="note.content"></textarea>

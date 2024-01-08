@@ -1,7 +1,7 @@
 /* sidebar.component.css */
 
 .sidebar {
-  background-color: rgb(112, 103, 128);
+  background-color: rgb(65, 64, 64);
   color: #ffffff;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -33,6 +33,11 @@ li {
 
 li:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+a{
+  text-decoration: none;
+  color: white;
 }
 
 .new-note-button {

@@ -53,7 +53,6 @@ export class EditComponent implements OnInit {
   }
 
   cancelEditing() {
-    // Puedes implementar la lógica para cancelar la edición
     this.getNote(); // Recarga la nota original
     this.toggleEditing(); // Cambia el modo de edición después de cancelar
   }
@@ -100,7 +99,6 @@ export class EditComponent implements OnInit {
         }
       });
     }
-    
   }
   
 }
