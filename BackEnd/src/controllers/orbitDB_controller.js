@@ -46,6 +46,8 @@ export const shareNote = async (note) => {
       console.log('[OrbitDb] : Nuevos cambios replicados con éxito');
       console.log(datos[0]);
       // Llamar a la función updateSharedNote con los nuevos datos
+      db.close();
+      orbitdb.stop()
       updateSharedNote(null, db_address);
     });
 
@@ -108,11 +110,6 @@ export const getSharedNote = async (db_address) => {
   } catch (error) {
     console.log('Error al recuperar la nota en OrbitDB:', error);
     throw error;
-  } finally{
-    // Asegurar que la instancia de OrbitDB se cierre adecuadamente
-    if (orbitdb) {
-      await orbitdb.stop();
-    }
   }
 }
 
@@ -156,10 +153,5 @@ export const updateSharedNote = async (note, db_address) => {
   } catch (error) {
     console.log('Error al actualizar la nota en OrbitDB:', error);
     throw error;
-  } finally{
-    // Asegurar que la instancia de OrbitDB se cierre adecuadamente
-    if (orbitdb) {
-      await orbitdb.stop();
-    }
   }
 }
