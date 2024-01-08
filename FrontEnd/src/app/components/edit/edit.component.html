@@ -6,6 +6,7 @@
           <button *ngIf="note.content" (click)="toggleEditing()">Editar</button>
           <button *ngIf="note.content" (click)="deleteNote()">Elimiar</button>
           <button *ngIf="!note.content" (click)="getSharedNote()">Buscar Nota compartida</button>
+          <p *ngIf="note.shared">Compartida en: {{ note.shared }}</p>
         </div>
         <div class="actions">
           <button *ngIf="note.content" (click)="shareNote()">Compartir</button>

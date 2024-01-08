@@ -78,6 +78,7 @@ export class EditComponent implements OnInit {
     this.apiService.shareNote(this.note._id).subscribe({
       next: (response: any) => {
         console.log(response)
+        alert("Puedes compartir tu nota usando esta URL:\n" + response.data.db_address)
       },
       error: (error: any) => {
         console.error(error);
@@ -91,14 +92,14 @@ export class EditComponent implements OnInit {
     if (userInput !== null) {
       this.apiService.getSharedNote(userInput).subscribe({
         next: (response: any) => {
-          console.log(response)
+          this.selectedNote = response.data.note_shared._id;
+          this.getNote();
         },
         error: (error: any) => {
           console.error(error);
         }
       });
     }
-
     
   }
   

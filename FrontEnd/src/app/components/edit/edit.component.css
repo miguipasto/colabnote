@@ -30,6 +30,11 @@
     background-color: #004696;
     color: #ffffff;
   }
+
+  p{
+    padding-left: 2%;
+    color:white;
+  }
   
   .title-bar h2 {
     margin: 0;
